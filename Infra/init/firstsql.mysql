@@ -1,0 +1,153 @@
+CREATE DATABASE search default character set utf8 collate utf8_general_ci; 
+USE search; 
+SET NAMES 'utf8';
+
+/*
+ * Action: tbl_search_goods 테이블생성
+ * Purpose: 검색 테이블 : 인덱스전상태 
+ */
+CREATE TABLE tbl_search_goods (
+  no int(11) NOT NULL AUTO_INCREMENT COMMENT '고유번호',
+  goods_no varchar(50) NOT NULL COMMENT '상품고유번호(문자)',
+  category1 varchar(50) NOT NULL COMMENT '카테고리1',
+  category2 varchar(50) NOT NULL COMMENT '카테고리2',
+  category3 varchar(50) NOT NULL COMMENT '카테고리3',
+  name_kr varchar(45) NOT NULL COMMENT '상품명(한)',
+  name_en varchar(45) DEFAULT NULL COMMENT '상품명(영)',
+  price int(11) NOT NULL COMMENT '상품가격',
+  view_cnt int(11) NOT NULL COMMENT '조회수',
+  sale_cnt int(11) NOT NULL COMMENT '판매량',
+  terms varchar(300) NOT NULL COMMENT '추가검색 키워드',
+  tags varchar(300) NOT NULL COMMENT '태깅',
+  url_pc varchar(300) NOT NULL COMMENT '상품URL PC',
+  url_mobile varchar(300) NOT NULL COMMENT '상품URL MOBILE',
+  image_url1 varchar(300) NOT NULL COMMENT '상품이미지 URL1',
+  image_url2 varchar(300) NOT NULL COMMENT '상품이미지 URL2',
+  PRIMARY KEY (no),
+  UNIQUE KEY goods_no_UNIQUE (goods_no)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='검색용 상품 DB';
+
+
+/*
+ * Action: 테스트용 기본 검색 데이터 인입
+ * Purpose: 개발환경 테스트조작및 다양한 데이터 인입 
+ */
+INSERT INTO tbl_search_goods (
+		goods_no, category1, category2,category3,name_kr,name_en,
+		price,view_cnt,sale_cnt,
+		terms,tags,
+		url_pc,url_mobile,image_url1,image_url2
+	)
+	VALUES 
+	(
+		'hotping-0001', '핫핑', '의류', '원피스','앙고라 콤비 울모직코트', 'na',
+		'1000','10','3',
+		'앙고라 콤비 울모직코트 신상',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'mins-0001', '민스샵', '의류', '니트','동화속 주름 니트', 'na',
+		'2000','20','5',
+		'동화속 주름 니트 신상',
+		'여성 의류 니트',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'imble-0001', '임블리', '의류', '후드티','우리제작 핑크 양기모', 'na',
+		'3000','10','9',
+		'우리제작 핑크 양기모 신상',
+		'여성 의류 후드티',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'daba-0001', '다바걸', '의류', '원피스','별처럼 깃털', 'na',
+		'4000','15','23',
+		'별처럼 깃털 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'daba-0002', '다바걸', '의류', '원피스','다바걸 울모직코트', 'na',
+		'5000','45','133',
+		'다바걸 울모직코트 신상 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'daba-0003', '다바걸', '의류', '원피스','엔티크 울모직코트', 'na',
+		'6000','76','1333',
+		'엔티크 울모직코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'daba-0004', '다바걸', '의류', '원피스','뉴문 울모직코트', 'na',
+		'7000','1000','300',
+		'뉴문 울모직코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'daba-0005', '다바걸', '의류', '원피스','미라클 울모직코트', 'na',
+		'8000','201','123',
+		'미라클 울모직코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'may-0001', '메이빈스', '의류', '원피스','복실복실 울모직 코트', 'na',
+		'9000','95','23',
+		'복실복실 울모직 코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'may-0002', '메이빈스', '의류', '원피스','라비앙 뽀송 울모직코트', 'na',
+		'10000','233','122',
+		'라비앙 뽀송 울모직코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	),
+	(
+		'may-0003', '메이빈스', '의류', '원피스','카페인 플라워 울모직코트', 'na',
+		'11000','93','22',
+		'카페인 플라워 울모직코트 인기',
+		'여성 의류 원피스',
+		'https://hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://m.hotping.co.kr/product/detail.html?product_no=27211&cate_no=25&display_group=1&cafe_mkt=ue_googlea1&gclid=CjwKCAiAjMHwBRAVEiwAzdLWGEOYCSuQBOgI-lkAXmnqWrEHTiEk5uJwMQ1FRvWEFlHxJJT3W5TVChoCx6AQAvD_BwE',
+		'https://loveparis.net/web/product/big/201801/10165_shop1_811032.jpg',
+		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
+	);
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;

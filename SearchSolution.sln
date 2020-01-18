@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi", "SearchApi\SearchApi.csproj", "{EC5A87B8-30DA-4757-8965-1F8E96DD4200}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00CD9F44-43BF-47C6-A8B8-C70911E062AE}"
+	ProjectSection(SolutionItems) = preProject
+		Doc\Document.mdj = Doc\Document.mdj
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra", "Infra", "{767C2B61-4172-404F-838E-234436AA3FA1}"
+	ProjectSection(SolutionItems) = preProject
+		Infra\docker-compose.yml = Infra\docker-compose.yml
+		Infra\README.md = Infra\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Init", "Init", "{5B86525C-37D4-418B-9F13-FD7721FCFF66}"
+	ProjectSection(SolutionItems) = preProject
+		Infra\init\firstsql.mysql = Infra\init\firstsql.mysql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApiTest", "SearchApiTest\SearchApiTest.csproj", "{59CE2150-3E41-4BB4-BB75-CDDE8F6099F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC5A87B8-30DA-4757-8965-1F8E96DD4200}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC5A87B8-30DA-4757-8965-1F8E96DD4200}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC5A87B8-30DA-4757-8965-1F8E96DD4200}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC5A87B8-30DA-4757-8965-1F8E96DD4200}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59CE2150-3E41-4BB4-BB75-CDDE8F6099F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CE2150-3E41-4BB4-BB75-CDDE8F6099F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CE2150-3E41-4BB4-BB75-CDDE8F6099F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CE2150-3E41-4BB4-BB75-CDDE8F6099F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{767C2B61-4172-404F-838E-234436AA3FA1} = {00CD9F44-43BF-47C6-A8B8-C70911E062AE}
+		{5B86525C-37D4-418B-9F13-FD7721FCFF66} = {767C2B61-4172-404F-838E-234436AA3FA1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A2653A6-E6FE-44F1-84FF-50AB40EE23A4}
+	EndGlobalSection
+EndGlobal
