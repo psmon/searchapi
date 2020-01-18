@@ -1,9 +1,11 @@
 
 # Elastic Search를 활용하여 검색엔진 만들기 (.net core)
 
+- [Document](http://wiki.webnori.com/pages/viewpage.action?pageId=34603066)
+
 # 엘라스틱 서치 로컬 인프라 준비
 
-[도커 인프라](/Infra/README.md)
+- [도커 인프라](/Infra/README.md)
 
 # TypeGen (C#->.ts)
 
