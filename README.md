@@ -3,7 +3,7 @@
 
 # 엘라스틱 서치 로컬 인프라 준비
 
-[도커 인프라](/SearchApi/Infra/README.md)
+[도커 인프라](/Infra/README.md)
 
 # TypeGen (C#->.ts)
 
