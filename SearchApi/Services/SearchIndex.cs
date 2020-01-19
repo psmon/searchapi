@@ -21,13 +21,12 @@ namespace SearchApi.Services
             _elasticClient = elasticClient;
         }
 
-        public async Task<List<SearchGoods>> FilterByCategory(string category1)
+        public async Task<List<SearchGoods>> FindAll()
         {
-            var goods = await _searchRepository.searchGoods.Where(s => s.category1 == category1)
+            var goods = await _searchRepository.searchGoods
                 .Select(s => s)
                 .ToAsyncEnumerable()
                 .ToList();
-
             return goods;
         }
 
@@ -37,20 +36,11 @@ namespace SearchApi.Services
             var allGoods = await FindAll();
             foreach (var item in allGoods)
             {
+                // 키워드 검색대상 추가
+                item.terms = $"{item.nameKr} {item.category1} {item.category2} {item.category3} {item.terms}";
                 await _elasticClient.IndexDocumentAsync(item);
-            }
-            
-
+            }            
             return allGoods.Count;
-        }
-
-        public async Task<List<SearchGoods>> FindAll()
-        {
-            var goods = await _searchRepository.searchGoods
-                .Select(s => s)
-                .ToAsyncEnumerable()
-                .ToList();
-            return goods;
         }
 
         public async Task<SearchResult> FindByFilter(SearchFilter filterOpt)
@@ -158,7 +148,7 @@ namespace SearchApi.Services
             result.total = (int)engine_result.Total;
             result.size = result.list.Count;
 
-            // 검색내 재 검색을 위한 summary
+            // 검색내 재 검색을 위한 summary : 아직 미구현
             result.summary = new Summary
             {
                 tags = new List<string>()
@@ -176,6 +166,5 @@ namespace SearchApi.Services
             };
             return result;            
         }
-
     }
 }

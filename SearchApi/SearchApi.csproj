@@ -73,10 +73,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Controllers\TestController.cs">
-      <Generator>DtsGenerator</Generator>
-      <LastGenOutput>TestController.cs.d.ts</LastGenOutput>
-    </Compile>
     <Compile Update="Models\Filter\SearchFilter.cs">
       <Generator>DtsGenerator</Generator>
       <LastGenOutput>SearchFilter.cs.d.ts</LastGenOutput>

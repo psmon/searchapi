@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TypeGen.Core.TypeAnnotations;
 
 namespace SearchApi.Entity
-{    
+{
     [Table("tbl_search_goods")]
     public class SearchGoods
     {
