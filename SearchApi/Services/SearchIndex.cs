@@ -7,6 +7,9 @@ using SearchApi.Entity;
 using SearchApi.Models.Filter;
 using SearchApi.Models.Result;
 using SearchApi.Repositories;
+using Microsoft.EntityFrameworkCore;
+using SearchApi.Config;
+using Microsoft.Extensions.Configuration;
 
 namespace SearchApi.Services
 {
@@ -14,11 +17,14 @@ namespace SearchApi.Services
     {
         private readonly SearchRepository _searchRepository;
         private readonly IElasticClient _elasticClient;
+        private readonly string _indexName;
 
-        public SearchIndex(SearchRepository searchRepository, IElasticClient elasticClient)
+        public SearchIndex(SearchRepository searchRepository, IElasticClient elasticClient,
+            IConfiguration configuration)
         {
             _searchRepository = searchRepository;
             _elasticClient = elasticClient;
+            _indexName = configuration["elasticsearch:index"];
         }
 
         public async Task<List<SearchGoods>> FindAll()
@@ -27,6 +33,15 @@ namespace SearchApi.Services
                 .Select(s => s)
                 .ToAsyncEnumerable()
                 .ToList();
+            return goods;
+        }
+
+        public async Task<SearchGoods> FindById(int id)
+        {
+            var goods = await _searchRepository.searchGoods
+                .Select(s => s)
+                .Where(s => s.no == id)
+                .SingleAsync();
             return goods;
         }
 
@@ -41,6 +56,16 @@ namespace SearchApi.Services
                 await _elasticClient.IndexDocumentAsync(item);
             }            
             return allGoods.Count;
+        }
+
+        public async Task<int> UpdateItem(SearchGoods item)
+        {                        
+            await _elasticClient.UpdateAsync<SearchGoods>(item.no, u => u.Index(_indexName)
+                .Doc(new SearchGoods { price = item.price }));
+
+            _searchRepository.Update(item);
+            await _searchRepository.SaveChangesAsync();
+            return 0;
         }
 
         public async Task<SearchResult> FindByFilter(SearchFilter filterOpt)
