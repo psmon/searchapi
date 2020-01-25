@@ -215,6 +215,21 @@ namespace SearchApi.Services
                             .Add("foo", "bar")
                         )
                     )
+                    .Terms("tag_cnt", st => st
+                        .Field(p => p.tags.Suffix("keyword"))
+                        .MinimumDocumentCount(1)
+                        .Size(100000)
+                        .ShardSize(100)
+                        .ExecutionHint(TermsAggregationExecutionHint.Map)
+                        .Missing("na")
+                        .Order(o => o
+                            .KeyAscending()
+                            .CountDescending()
+                        )
+                        .Meta(m => m
+                            .Add("foo", "bar")
+                        )
+                    )
             );
 
             /*
@@ -232,15 +247,12 @@ namespace SearchApi.Services
             var agg = engine_result.Aggregations;
             var category1_aggs = agg.Terms("category1_cnt");
             var category2_aggs = agg.Terms("category2_cnt");
+            var tag_aggs = agg.Terms("tag_cnt");
 
 
             // 검색내 재 검색을 위한 summary : 아직 미구현
             result.summary = new Summary
             {
-                tags = new List<string>()
-                {
-                    "여성","의류","원피스"
-                },
                 filterValues = new List<FilterValue>()
                 {
                     new FilterValue(){fieldName="average_per_price",name="",value=agg.ValueCount("average_per_price").Value},
@@ -258,6 +270,13 @@ namespace SearchApi.Services
             foreach (var category2_item in category2_aggs.Buckets)
             {
                 result.summary.filterValues.Add(new FilterValue() { fieldName = "category2", name = category2_item.Key, value = category2_item.DocCount });
+            }
+
+            result.summary.tags = new List<string>();
+
+            foreach (var tag_item in tag_aggs.Buckets)
+            {
+                result.summary.tags.Add(tag_item.Key);
             }
 
             return result;            
