@@ -20,6 +20,8 @@ namespace SearchApi.Services
         private readonly IElasticClient _elasticClient;
         private readonly string _indexName;
 
+        public object FirstNameToFind { get; private set; }
+
         public SearchIndex(SearchRepository searchRepository, IElasticClient elasticClient,
             IConfiguration configuration)
         {
@@ -182,7 +184,37 @@ namespace SearchApi.Services
             searchDes.Aggregations(aggs => aggs
                     .Average("average_per_price", avg => avg.Field(p => p.price))
                     .Max("max_per_price", avg => avg.Field(p => p.price))
-                    .Min("min_per_price", avg => avg.Field(p => p.price))                    
+                    .Min("min_per_price", avg => avg.Field(p => p.price))
+                    .Terms("category1_cnt", st => st
+                        .Field(p => p.category1.Suffix("keyword"))
+                        .MinimumDocumentCount(1)
+                        .Size(100000)
+                        .ShardSize(100)
+                        .ExecutionHint(TermsAggregationExecutionHint.Map)
+                        .Missing("na")
+                        .Order(o => o
+                            .KeyAscending()
+                            .CountDescending()
+                        )
+                        .Meta(m => m
+                            .Add("foo", "bar")
+                        )
+                    )
+                    .Terms("category2_cnt", st => st
+                        .Field(p => p.category2.Suffix("keyword"))
+                        .MinimumDocumentCount(1)
+                        .Size(100000)
+                        .ShardSize(100)
+                        .ExecutionHint(TermsAggregationExecutionHint.Map)
+                        .Missing("na")
+                        .Order(o => o
+                            .KeyAscending()
+                            .CountDescending()
+                        )
+                        .Meta(m => m
+                            .Add("foo", "bar")
+                        )
+                    )
             );
 
             /*
@@ -197,7 +229,10 @@ namespace SearchApi.Services
             result.total = (int)engine_result.Total;
             result.size = result.list.Count;
 
-            var agg = engine_result.Aggregations;           
+            var agg = engine_result.Aggregations;
+            var category1_aggs = agg.Terms("category1_cnt");
+            var category2_aggs = agg.Terms("category2_cnt");
+
 
             // 검색내 재 검색을 위한 summary : 아직 미구현
             result.summary = new Summary
@@ -210,14 +245,21 @@ namespace SearchApi.Services
                 {
                     new FilterValue(){fieldName="average_per_price",name="",value=agg.ValueCount("average_per_price").Value},
                     new FilterValue(){fieldName="max_per_price",name="",value=agg.ValueCount("max_per_price").Value},
-                    new FilterValue(){fieldName="min_per_price",name="",value=agg.ValueCount("min_per_price").Value},
-                    new FilterValue(){fieldName="category1",name="핫핑",value=1},
-                    new FilterValue(){fieldName="category1",name="메이빈스",value=13},
-                    new FilterValue(){fieldName="category1",name="다바걸",value=12},
-                    new FilterValue(){fieldName="category2",name="의류",value=31},
-                    new FilterValue(){fieldName="category2",name="신발",value=21},
+                    new FilterValue(){fieldName="min_per_price",name="",value=agg.ValueCount("min_per_price").Value}
+                    
                 }
             };
+
+            foreach(var category1_item in category1_aggs.Buckets)
+            {
+                result.summary.filterValues.Add(new FilterValue() { fieldName = "category1", name = category1_item.Key, value = category1_item.DocCount });                
+            }
+
+            foreach (var category2_item in category2_aggs.Buckets)
+            {
+                result.summary.filterValues.Add(new FilterValue() { fieldName = "category2", name = category2_item.Key, value = category2_item.DocCount });
+            }
+
             return result;            
         }
     }

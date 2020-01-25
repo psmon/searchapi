@@ -50,7 +50,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'mins-0001', '민스샵', '의류', '니트','동화속 주름 니트', 'na',
+		'mins-0001', '민스샵', '바지', '니트','동화속 주름 니트', 'na',
 		'2000','20','5',
 		'동화속 주름 니트 신상',
 		'여성 의류 니트',
@@ -60,7 +60,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'imble-0001', '임블리', '의류', '후드티','우리제작 핑크 양기모', 'na',
+		'imble-0001', '임블리', '속옷', '후드티','우리제작 핑크 양기모', 'na',
 		'3000','10','9',
 		'우리제작 핑크 양기모 신상',
 		'여성 의류 후드티',
@@ -70,7 +70,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'daba-0001', '다바걸', '의류', '원피스','별처럼 깃털', 'na',
+		'daba-0001', '다바걸', '멜빵', '원피스','별처럼 깃털', 'na',
 		'4000','15','23',
 		'별처럼 깃털 인기',
 		'여성 의류 원피스',
@@ -90,7 +90,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'daba-0003', '다바걸', '의류', '원피스','엔티크 울모직코트', 'na',
+		'daba-0003', '다바걸', '양말', '원피스','엔티크 울모직코트', 'na',
 		'6000','76','1333',
 		'엔티크 울모직코트 인기',
 		'여성 의류 원피스',
@@ -100,7 +100,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'daba-0004', '다바걸', '의류', '원피스','뉴문 울모직코트', 'na',
+		'daba-0004', '다바걸', '모자', '원피스','뉴문 울모직코트', 'na',
 		'7000','1000','300',
 		'뉴문 울모직코트 인기',
 		'여성 의류 원피스',
@@ -110,7 +110,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'daba-0005', '다바걸', '의류', '원피스','미라클 울모직코트', 'na',
+		'daba-0005', '다바걸', '하의', '원피스','미라클 울모직코트', 'na',
 		'8000','201','123',
 		'미라클 울모직코트 인기',
 		'여성 의류 원피스',
@@ -120,7 +120,7 @@ INSERT INTO tbl_search_goods (
 		'https://www.loveparis.net/web/product/medium/201811/ee23d7024f05c1c4362967f6f1895cfd.jpg'
 	),
 	(
-		'may-0001', '메이빈스', '의류', '원피스','복실복실 울모직 코트', 'na',
+		'may-0001', '메이빈스', '상의', '원피스','복실복실 울모직 코트', 'na',
 		'9000','95','23',
 		'복실복실 울모직 코트 인기',
 		'여성 의류 원피스',
