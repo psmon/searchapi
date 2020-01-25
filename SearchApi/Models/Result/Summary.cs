@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace SearchApi.Models.Result
 {
-    public class FilterCount
+    public class FilterValue
     {
         public string fieldName { get; set; }
 
         public string name { get; set; }
 
-        public int count { get; set; }
+        public double? value { get; set; }
     }
 
     public class Summary
     {
         public List<string> tags { get; set; }
 
-        public List<FilterCount> filterCounts { get; set; }
+        public List<FilterValue> filterValues { get; set; }
 
     }
 }

@@ -178,10 +178,26 @@ namespace SearchApi.Services
             searchDes = searchDes.Query(q=>q                
                 .Bool(bq => bq.Filter(filters)));
 
+            //Aggregations(검색 결과 집계 처리)
+            searchDes.Aggregations(aggs => aggs
+                    .Average("average_per_price", avg => avg.Field(p => p.price))
+                    .Max("max_per_price", avg => avg.Field(p => p.price))
+                    .Min("min_per_price", avg => avg.Field(p => p.price))                    
+            );
+
+            /*
+             .Cardinality("state_count", c => c
+                        .Field(p => p.category1)
+                        .PrecisionThreshold(100)
+                    )
+             */
+
             var engine_result = await _elasticClient.SearchAsync<SearchGoods>(searchDes);
-            result.list = engine_result.Documents.ToList<SearchGoods>();
+            result.list = engine_result.Documents.ToList();
             result.total = (int)engine_result.Total;
             result.size = result.list.Count;
+
+            var agg = engine_result.Aggregations;           
 
             // 검색내 재 검색을 위한 summary : 아직 미구현
             result.summary = new Summary
@@ -190,13 +206,16 @@ namespace SearchApi.Services
                 {
                     "여성","의류","원피스"
                 },
-                filterCounts = new List<FilterCount>()
+                filterValues = new List<FilterValue>()
                 {
-                    new FilterCount(){fieldName="category1",name="핫핑",count=1},
-                    new FilterCount(){fieldName="category1",name="메이빈스",count=13},
-                    new FilterCount(){fieldName="category1",name="다바걸",count=12},
-                    new FilterCount(){fieldName="category2",name="의류",count=31},
-                    new FilterCount(){fieldName="category2",name="신발",count=21},
+                    new FilterValue(){fieldName="average_per_price",name="",value=agg.ValueCount("average_per_price").Value},
+                    new FilterValue(){fieldName="max_per_price",name="",value=agg.ValueCount("max_per_price").Value},
+                    new FilterValue(){fieldName="min_per_price",name="",value=agg.ValueCount("min_per_price").Value},
+                    new FilterValue(){fieldName="category1",name="핫핑",value=1},
+                    new FilterValue(){fieldName="category1",name="메이빈스",value=13},
+                    new FilterValue(){fieldName="category1",name="다바걸",value=12},
+                    new FilterValue(){fieldName="category2",name="의류",value=31},
+                    new FilterValue(){fieldName="category2",name="신발",value=21},
                 }
             };
             return result;            
