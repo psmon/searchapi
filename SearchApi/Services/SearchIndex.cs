@@ -10,6 +10,7 @@ using SearchApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 using SearchApi.Config;
 using Microsoft.Extensions.Configuration;
+using Elasticsearch.Net;
 
 namespace SearchApi.Services
 {
@@ -36,12 +37,13 @@ namespace SearchApi.Services
             return goods;
         }
 
-        public async Task<SearchGoods> FindById(int id)
+        public async Task<SearchGoods> FindByGoodsNo(string goodsNo)
         {
             var goods = await _searchRepository.searchGoods
                 .Select(s => s)
-                .Where(s => s.no == id)
+                .Where(s => s.goodsNo == goodsNo)
                 .SingleAsync();
+
             return goods;
         }
 
@@ -59,11 +61,19 @@ namespace SearchApi.Services
         }
 
         public async Task<int> UpdateItem(SearchGoods item)
-        {                        
-            await _elasticClient.UpdateAsync<SearchGoods>(item.no, u => u.Index(_indexName)
-                .Doc(new SearchGoods { price = item.price }));
+        {
+            await _elasticClient.UpdateAsync<SearchGoods>(item.no, u => u.Doc(item));
 
-            _searchRepository.Update(item);
+            await _elasticClient.UpdateByQueryAsync<SearchGoods>(u => u
+            .Query(q => q
+            .Match(m => m
+                .Field(p => p.goodsNo)
+                .Query(item.goodsNo)
+            ))
+            .Script($"ctx._source.price = {item.price}")
+            .Conflicts(Conflicts.Proceed)
+            .Refresh(true));
+
             await _searchRepository.SaveChangesAsync();
             return 0;
         }

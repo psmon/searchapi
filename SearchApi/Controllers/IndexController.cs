@@ -19,9 +19,9 @@ namespace SearchApi.Controllers
         }
 
         [HttpPost("update/price")]
-        public async Task<int> UpdatePrice(int no,int newprice)
+        public async Task<int> UpdatePrice(string goodsNo,int newprice)
         {
-            var updateItem = await _searchIndex.FindById(no);
+            var updateItem = await _searchIndex.FindByGoodsNo(goodsNo);
             updateItem.price = newprice;
             await _searchIndex.UpdateItem(updateItem);
             return 0;
