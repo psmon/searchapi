@@ -5,6 +5,10 @@
 
 개발환경에 필요한 최소 데이터가 자동 인입처리됩니다. (init/firstsql.mysql)
 
+## Docker Tip
+    docker ps -q | % { docker stop $_ } : 도커 모두중지(윈도우용)
+    docker stop $(docker ps -a -q)  : 도커 모두중지(리눅스용)
+
 
 ## Local 실행
 

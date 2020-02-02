@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elasticsearch.Net;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Nest;
 using SearchApi.Entity;
 using SearchApi.Models.Filter;
 using SearchApi.Models.Result;
 using SearchApi.Repositories;
-using Microsoft.EntityFrameworkCore;
-using SearchApi.Config;
-using Microsoft.Extensions.Configuration;
-using Elasticsearch.Net;
 
 namespace SearchApi.Services
 {
@@ -231,14 +230,7 @@ namespace SearchApi.Services
                         )
                     )
             );
-
-            /*
-             .Cardinality("state_count", c => c
-                        .Field(p => p.category1)
-                        .PrecisionThreshold(100)
-                    )
-             */
-
+            
             var engine_result = await _elasticClient.SearchAsync<SearchGoods>(searchDes);
             result.list = engine_result.Documents.ToList();
             result.total = (int)engine_result.Total;
@@ -249,8 +241,7 @@ namespace SearchApi.Services
             var category2_aggs = agg.Terms("category2_cnt");
             var tag_aggs = agg.Terms("tag_cnt");
 
-
-            // 검색내 재 검색을 위한 summary : 아직 미구현
+            // 검색내 재 검색을 위한 summary
             result.summary = new Summary
             {
                 filterValues = new List<FilterValue>()
