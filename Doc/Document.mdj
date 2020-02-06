@@ -7334,8 +7334,8 @@
 									"font": "Arial;13;0",
 									"left": 144,
 									"top": 88,
-									"width": 265,
-									"height": 153
+									"width": 241,
+									"height": 217
 								},
 								{
 									"_type": "ERDEntityView",
@@ -7452,7 +7452,7 @@
 												"$ref": "AAAAAAFv/n8ah++sfrQ="
 											},
 											"font": "Arial;13;1",
-											"left": 296,
+											"left": 272,
 											"top": 149,
 											"width": 85.61181640625,
 											"height": 13,
@@ -7478,7 +7478,7 @@
 														"$ref": "AAAAAAFv/n/lR+/IXwQ="
 													},
 													"font": "Arial;13;0",
-													"left": 301,
+													"left": 277,
 													"top": 172,
 													"width": 75.61181640625,
 													"height": 13
@@ -7493,21 +7493,21 @@
 														"$ref": "AAAAAAFv/oIvOe/+jtA="
 													},
 													"font": "Arial;13;0",
-													"left": 301,
+													"left": 277,
 													"top": 187,
 													"width": 75.61181640625,
 													"height": 13
 												}
 											],
 											"font": "Arial;13;0",
-											"left": 296,
+											"left": 272,
 											"top": 167,
 											"width": 85.61181640625,
 											"height": 38
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 296,
+									"left": 272,
 									"top": 144,
 									"width": 85.61181640625,
 									"height": 61,
@@ -7525,11 +7525,94 @@
 										"$ref": "AAAAAAFv/n46zO924ik="
 									},
 									"font": "Arial;13;0",
-									"left": 320,
+									"left": 312,
 									"top": 96,
 									"width": 62,
 									"height": 25,
 									"text": "검색문서"
+								},
+								{
+									"_type": "ERDEntityView",
+									"_id": "AAAAAAFv/oWuhPAoQGg=",
+									"_parent": {
+										"$ref": "AAAAAAFv/n46zO924ik="
+									},
+									"model": {
+										"$ref": "AAAAAAFv/oWuhPAmfLU="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAFv/oWuhPApeGQ=",
+											"_parent": {
+												"$ref": "AAAAAAFv/oWuhPAoQGg="
+											},
+											"font": "Arial;13;1",
+											"left": 272,
+											"top": 221,
+											"width": 85.61181640625,
+											"height": 13,
+											"text": "상품파티션3"
+										},
+										{
+											"_type": "ERDColumnCompartmentView",
+											"_id": "AAAAAAFv/oWuhPAqn/o=",
+											"_parent": {
+												"$ref": "AAAAAAFv/oWuhPAoQGg="
+											},
+											"model": {
+												"$ref": "AAAAAAFv/oWuhPAmfLU="
+											},
+											"subViews": [
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAFv/oXdfPA2AXY=",
+													"_parent": {
+														"$ref": "AAAAAAFv/oWuhPAqn/o="
+													},
+													"model": {
+														"$ref": "AAAAAAFv/oXdGfAzi6w="
+													},
+													"font": "Arial;13;0",
+													"left": 277,
+													"top": 244,
+													"width": 75.61181640625,
+													"height": 13
+												},
+												{
+													"_type": "ERDColumnView",
+													"_id": "AAAAAAFv/oX6ePA8Oyc=",
+													"_parent": {
+														"$ref": "AAAAAAFv/oWuhPAqn/o="
+													},
+													"model": {
+														"$ref": "AAAAAAFv/oX6H/A5YVc="
+													},
+													"font": "Arial;13;0",
+													"left": 277,
+													"top": 259,
+													"width": 75.61181640625,
+													"height": 13
+												}
+											],
+											"font": "Arial;13;0",
+											"left": 272,
+											"top": 239,
+											"width": 85.61181640625,
+											"height": 38
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 272,
+									"top": 216,
+									"width": 85.61181640625,
+									"height": 61,
+									"nameLabel": {
+										"$ref": "AAAAAAFv/oWuhPApeGQ="
+									},
+									"columnCompartment": {
+										"$ref": "AAAAAAFv/oWuhPAqn/o="
+									}
 								}
 							]
 						},
@@ -7588,6 +7671,32 @@
 									"_id": "AAAAAAFv/oIvOe/+jtA=",
 									"_parent": {
 										"$ref": "AAAAAAFv/n8ah++qhLE="
+									},
+									"name": "_id"
+								}
+							]
+						},
+						{
+							"_type": "ERDEntity",
+							"_id": "AAAAAAFv/oWuhPAmfLU=",
+							"_parent": {
+								"$ref": "AAAAAAFv/n46ye91wTo="
+							},
+							"name": "상품파티션3",
+							"columns": [
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAFv/oXdGfAzi6w=",
+									"_parent": {
+										"$ref": "AAAAAAFv/oWuhPAmfLU="
+									},
+									"name": "View수"
+								},
+								{
+									"_type": "ERDColumn",
+									"_id": "AAAAAAFv/oX6H/A5YVc=",
+									"_parent": {
+										"$ref": "AAAAAAFv/oWuhPAmfLU="
 									},
 									"name": "_id"
 								}
